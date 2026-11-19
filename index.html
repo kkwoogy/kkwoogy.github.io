@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MODE Lab</title>
+<meta name="description" content="KAIST 학부생 경욱이 직접 설계하고 만든 것들을 분야별로 모아 두는 곳.">
+<meta property="og:title" content="MODE Lab"><meta property="og:description" content="KAIST 학부생 경욱이 직접 설계하고 만든 것들을 분야별로 모아 두는 곳."><meta property="og:image" content="https://kkwoogy.github.io/assets/img/og.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="assets/css/site.css">
+<!-- Home, in this order: what this place is, one statement, the areas, then the newest work.
+     The ribbon, area tiles and work cards are filled from assets/js/works.js by assets/js/home.js. -->
+</head>
+<body>
+<header class="gnav"></header>
+<p class="ribbon" id="ribbon">&nbsp;</p>
+
+<main>
+  <section class="hero-home">
+    <h1 class="rise">MODE<i>Lab</i></h1>
+    <p class="big rise" style="--d: .1s">직접 설계하고,<br>직접 만듭니다.</p>
+    <p class="sub rise" style="--d: .25s">KAIST 학부생 경욱이 만든 것들을 분야별로 모아 두는 곳입니다.</p>
+    <p class="gos rise" style="--d: .4s"><a class="go" href="#areas">분야 보기</a><a class="go" href="about.html">소개</a></p>
+  </section>
+
+  <section class="statement wrap" aria-label="만드는 방식">
+    <p>겉모양은 CAD로 설계해 3D 프린터로 뽑고, 안에 들어갈 회로와 펌웨어, 그 위에서 돌아갈 소프트웨어까지 만듭니다. 만든 것은 분야별로 나눠 이곳에 모아 둡니다.</p>
+  </section>
+
+  <section id="areas" aria-labelledby="areas-h">
+    <div class="head wrap"><h2 id="areas-h">분야별로 둘러보기.</h2></div>
+    <div class="area-tiles" id="area-tiles"></div>
+  </section>
+
+  <section class="recent" aria-labelledby="recent-h">
+    <div class="head wrap"><h2 id="recent-h">최근 작업.</h2></div>
+    <div class="gallery" id="gallery"></div>
+    <div class="paddles wrap">
+      <button type="button" aria-label="이전 작업"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M9 2 4 7l5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button type="button" aria-label="다음 작업"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="m5 2 5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+    </div>
+  </section>
+
+  <section class="duo" aria-label="더 보기">
+    <a href="about.html"><h3>경욱</h3><p>KAIST 학부생입니다. 자율주행처럼 움직이는 것과 로봇 만드는 일에 관심이 많습니다.</p><span class="go">소개</span></a>
+    <a href="https://blog.naver.com/koreatonystark"><h3>블로그</h3><p>만드는 과정과 대회 이야기를 적습니다.</p><span class="go">블로그로 가기</span></a>
+  </section>
+</main>
+
+<footer class="foot"></footer>
+<script type="module" src="assets/js/chrome.js"></script>
+<script type="module" src="assets/js/home.js"></script>
+</body></html>

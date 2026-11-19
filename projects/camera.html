@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>디지털카메라 · MODE Lab</title>
+<meta name="description" content="라즈베리 파이 3 B+와 800만 화소 카메라 모듈로 만드는 레트로 디지털카메라. 바디를 코드로 설계했습니다.">
+<meta property="og:title" content="디지털카메라 · MODE Lab"><meta property="og:image" content="https://kkwoogy.github.io/assets/img/og.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body data-work="camera">
+<header class="gnav"></header>
+<nav class="lnav" aria-label="디지털카메라"></nav>
+
+<section class="scrolly" id="look" data-nav="구조">
+  <div class="stage-col">
+    <div class="stage" id="stage" data-model="camera">
+      <canvas aria-label="디지털카메라 3D 모델. 끌어서 돌려 볼 수 있습니다."></canvas>
+      <img class="still" src="../assets/img/cam-clay.png" alt="디지털카메라 바디 렌더">
+      <div class="tags"></div><div class="load"></div>
+      <p class="hint">끌어서 돌려 보기</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step intro">
+      <p class="crumb"><a href="../product/">제품</a></p>
+      <h1>디지털카메라</h1>
+      <p class="lead">라즈베리 파이 3 B+와 800만 화소 카메라 모듈로 만드는 레트로 디카입니다. 바디를 처음부터 코드(CadQuery)로 설계해서, 치수 하나를 고치면 출력 파일이 전부 다시 만들어집니다.</p>
+      <p class="about-line"><span data-meta></span></p>
+    </div>
+    <div class="step" id="body" data-x="0.5" data-f="shell" data-yaw="-0.75" data-pitch="0.1">
+      <p><b>바디.</b> 앞 쉘과 뒤 쉘 두 쪽입니다. 오른손으로 쥐었을 때 렌즈는 앞에서 오른쪽, 셔터는 윗면 검지 자리, 화면은 뒤에서 왼쪽에 오도록 배치했습니다.</p>
+    </div>
+    <div class="step" id="lens" data-x="1" data-f="lens" data-yaw="-0.55" data-pitch="0.05">
+      <p><b>렌즈.</b> 카메라 모듈은 IMX219(대각 화각 79.3°, F2.0)이고, 그 앞에 경통 링 세 개와 커버 글라스를 겹칩니다. 링이 화각을 가리지 않는지는 출력 전에 스크립트로 확인합니다.</p>
+    </div>
+    <div class="step" id="controls" data-x="0.85" data-f="top" data-pitch="0.45" data-yaw="0.1">
+      <p><b>윗면.</b> 2단 셔터와 그 둘레의 줌 링, 전원 버튼, 4단 모드 다이얼이 있습니다. 뒷면에는 2.8인치 LCD와 조이스틱, 버튼 두 개가 들어갑니다.</p>
+    </div>
+    <div class="step" id="hand" data-x="0.85" data-f="hand" data-yaw="-0.45" data-pitch="0.2">
+      <p><b>그립과 뷰파인더.</b> 왼쪽의 그립, 위쪽 뷰파인더 통과 플래시 창입니다. 안에는 리튬 배터리와 USB-C 충전 모듈, 스피커, 시계(RTC)가 들어갑니다.</p>
+    </div>
+    <div class="step" id="fit" data-x="0">
+      <p><b>닫으면.</b> 130 mm 안에 보드와 배터리, 화면, 카메라가 빽빽하게 들어가지만, 의도한 접촉 말고 겹치는 곳은 없습니다. 가장 좁은 틈은 렌즈 슬리브와 배터리 사이 0.3 mm입니다.</p>
+    </div>
+  </div>
+</section>
+
+<main class="work">
+  <section class="sec" id="check" data-nav="확인">
+    <h2>출력하기 전에 확인하는 것들.</h2>
+    <p>본체 한 판을 뽑는 데 8–11시간이 걸려서, 틀린 걸 출력한 뒤에 알면 하루가 그냥 지나갑니다. 그래서 <b>확인할 수 있는 건 되도록 스크립트로 확인하게</b> 만들었습니다.</p>
+    <div class="tiles">
+      <div class="tile"><h3>모르는 치수</h3><p>부품마다 판매처 표기가 다르고, 기계 도면이 아예 없는 부품도 많았습니다. 공식 도면에서 가져온 값과 제가 가정한 값을 표로 나눠 두고, 직접 재야 하는 값은 설정 파일에 따로 표시했습니다. 부품이 도착하면 재서 값만 고치고 빌드 스크립트를 다시 돌리면 됩니다.</p></div>
+      <div class="tile"><h3>부품끼리 부딪히는지</h3><p>부품 외형과 출력물을 겹쳐 보는 검사 스크립트를 만들었고, 카메라의 화각 원뿔이 경통이나 덮개에 걸리는지도 같이 봅니다. 지금은 겹치는 곳이 없고, 가장 좁은 틈은 렌즈 슬리브와 배터리 사이 0.3 mm, 배터리와 랜 포트 사이 0.4 mm입니다.</p></div>
+      <div class="tile"><h3>시험판</h3><p>나사 인서트 구멍(3.8–4.2 mm), LCD 자리, 버튼 눌림을 확인하는 작은 시험판 세 개를 먼저 뽑습니다. 하나에 10–20분이면 되고, 맞는 값을 찾은 뒤에 본체를 출력합니다.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="print" data-nav="출력">
+    <h2>출력.</h2>
+    <p>부품은 열다섯 가지입니다. 앞뒤 쉘을 한 판(약 8–11시간), 렌즈 링과 버튼 같은 작은 부품과 시험판을 또 한 판(약 4–6시간)에 놓고, 흰색 플래시 창만 따로 뽑습니다(약 10분).</p>
+    <p>어두운 회색 PLA로 뽑은 뒤, 바디와 링은 서페이서와 400방 사포를 거쳐 <b>메탈릭 실버로 칠할 계획</b>입니다. 렌즈 슬리브 안쪽은 빛이 번지지 않게 무광 검정으로 칠합니다.</p>
+    <figure><img src="../assets/img/cam-parts.jpg" alt="카메라의 출력 부품 열다섯 가지를 펼쳐 놓은 렌더" loading="lazy"><figcaption>출력 부품 전체</figcaption></figure>
+  </section>
+
+  <section class="sec" id="specs" data-nav="제원">
+    <h2>제원.</h2>
+    <dl class="specs">
+      <div><dt>크기</dt><dd>130 × 78 × 36 mm, 렌즈까지 약 48 mm</dd></div>
+      <div><dt>보드</dt><dd>라즈베리 파이 3 B+</dd></div>
+      <div><dt>카메라</dt><dd>IMX219, 800만 화소, 대각 화각 79.3°, F2.0</dd></div>
+      <div><dt>화면</dt><dd>2.8인치 LCD</dd></div>
+      <div><dt>조작</dt><dd>2단 셔터와 줌 링, 전원 버튼, 4단 모드 다이얼, 조이스틱, 버튼 두 개</dd></div>
+      <div><dt>전원</dt><dd>리튬 배터리, USB-C 충전</dd></div>
+      <div><dt>그 밖에</dt><dd>스피커, 시계(RTC), 뷰파인더, 플래시 창</dd></div>
+      <div><dt>설계</dt><dd>CadQuery</dd></div>
+      <div><dt>출력</dt><dd>부품 열다섯 가지, 어두운 회색 PLA</dd></div>
+    </dl>
+  </section>
+
+  <section class="sec" id="next">
+    <h2>다음.</h2>
+    <p>시험판으로 치수를 맞추고 본체를 출력해 조립합니다. 그다음은 촬영 소프트웨어와 필름 느낌의 색 보정입니다.</p>
+    <div class="slot">완성한 카메라와, 이 카메라로 찍은 첫 사진<small>assets/img/cam-photo.jpg</small></div>
+    <p class="small">만드는 과정은 <a href="https://blog.naver.com/koreatonystark">블로그</a>에 적고 있습니다.</p>
+  </section>
+
+  <section class="more-works" aria-label="다른 작업"></section>
+</main>
+
+<footer class="foot"></footer>
+<script type="module" src="../assets/js/chrome.js"></script>
+<script type="module" src="../assets/js/case.js"></script>
+<script type="module" src="../assets/js/work.js"></script>
+</body></html>

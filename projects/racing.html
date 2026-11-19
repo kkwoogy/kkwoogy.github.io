@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MR 자율주행 · MODE Lab</title>
+<meta name="description" content="2026 ISTech IT Arena(POSTECH)에 KAIST 팀 MR로 출전한 자율주행 레이스카.">
+<meta property="og:title" content="MR 자율주행 · MODE Lab"><meta property="og:image" content="https://kkwoogy.github.io/assets/img/og.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<style>
+  /* the official map, with the simulated racing line drawing itself once it comes into view */
+  .map svg { display: block; width: 100%; height: auto; }
+  .map .line { fill: none; stroke: #f5f5f7; stroke-width: 2.6; stroke-linejoin: round; stroke-linecap: round; }
+  .map .ghost { fill: none; stroke: #2c2c2e; stroke-width: 2.6; }
+  .map .car { fill: #2997ff; }
+  .map figcaption { max-width: 40em; margin: 18px auto 0; }
+</style>
+</head>
+<body data-work="racing">
+<header class="gnav"></header>
+<nav class="lnav" aria-label="MR 자율주행"></nav>
+
+<section class="whero">
+  <p class="crumb rise"><a href="../robotics/">로봇·자율주행</a></p>
+  <h1 class="rise" style="--d: .08s">MR 자율주행</h1>
+  <p class="lead rise" style="--d: .16s">2026 ISTech IT Arena(POSTECH)에 KAIST 동아리 팀 MR로 출전했습니다. 라이다와 카메라를 단 차가 신호등을 보고 출발해, 다른 차들과 같은 트랙에서 5랩을 스스로 달리는 경기입니다.</p>
+  <p class="about-line rise" style="--d: .24s"><span data-meta></span><br>차량 전장, 펌웨어, 주행 프로그램, 대회 준비<span class="todo"> · 결과 입력</span></p>
+</section>
+<figure class="map wrap-wide rise" id="map" style="--d: .32s">
+  <svg viewBox="0 0 1064 704" role="img" aria-label="공식 맵 위에 그린 시뮬레이션 주행 경로">
+    <image href="../assets/img/mr-map.png" width="1064" height="704"/>
+    <path class="ghost" id="ghost"/>
+    <path class="line" id="lap"/>
+    <circle class="car" id="car" r="6" cx="-20" cy="-20"/>
+  </svg>
+  <figcaption>공식 맵 위에 그린 시뮬레이션 경로입니다. 최고 속도를 1.0 m/s로 두면 5랩 모두 41.4–41.5초, 잔디 이탈은 없었습니다. 맵 출처: 2026 ISTech IT Arena 대회 자료.</figcaption>
+</figure>
+<p class="note">팀 저장소의 코드는 팀 약속에 따라 공개하지 않습니다. 이 페이지에는 제가 맡은 부분을 글로만 정리했습니다.</p>
+
+<main class="work">
+  <section class="sec" id="car-sec" data-nav="차량">
+    <h2>차량.</h2>
+    <p>라이다(RPLIDAR C1)와 카메라(IMX219)가 젯슨으로 들어가고, <b>젯슨이 주행을 판단</b>합니다. 뒷바퀴 모터 두 개는 ESP32를 거쳐, 앞바퀴 서보 두 개는 서보 어댑터를 거쳐 움직입니다.</p>
+    <p>앞바퀴는 애커만 조향으로 꺾고, 뒷바퀴는 안쪽과 바깥쪽 속도를 따로 계산해(전자 차동) 돌립니다. 대회 중 원격 조종은 실격이라, 사람이 쓸 수 있는 건 웹 화면의 준비, 재출발, 정지 버튼과 하드웨어 비상정지뿐입니다.</p>
+    <dl class="specs">
+      <div><dt>센서</dt><dd>라이다 RPLIDAR C1, 카메라 IMX219</dd></div>
+      <div><dt>주행 판단</dt><dd>젯슨</dd></div>
+      <div><dt>구동</dt><dd>뒷바퀴 모터 두 개(ESP32), 전자 차동</dd></div>
+      <div><dt>조향</dt><dd>앞바퀴 서보 두 개(서보 어댑터), 애커만 조향</dd></div>
+      <div><dt>사람이 쓰는 것</dt><dd>웹 화면의 준비, 재출발, 정지 버튼과 하드웨어 비상정지</dd></div>
+    </dl>
+  </section>
+
+  <section class="sec" id="role" data-nav="맡은 일">
+    <h2>맡은 일.</h2>
+    <div class="tiles">
+      <div class="tile"><h3>ESP32 모터 펌웨어</h3><p>준비, 정지, 속도 명령과 300 ms 워치독, 가속 제한, 속도 상한</p></div>
+      <div class="tile"><h3>젯슨 주행 프로그램</h3><p>라이다로 빈 공간을 따라가는 Follow the Gap, 카메라로 잔디 감지, 신호등 보고 출발, 막혔을 때 빠져나오기</p></div>
+      <div class="tile"><h3>조향과 구동</h3><p>애커만 조향과 전자 차동 계산, 서보 통신</p></div>
+      <div class="tile"><h3>브라우저 점검 화면</h3><p>카메라, 잔디·마커·신호등 인식 결과, 라이다, 문턱값 조정</p></div>
+      <div class="tile"><h3>시험과 배포</h3><p>가짜 장치로 하는 시험, 맥에서 젯슨으로 올리는 배포 스크립트, 실차 첫 시험과 대회 당일 순서표</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="prep" data-nav="준비">
+    <h2>준비하면서.</h2>
+    <div class="tiles">
+      <div class="tile"><h3>멈추는 장치</h3><p>젯슨 프로그램이 멈추거나 USB가 빠지면, 차는 마지막으로 받은 속도로 계속 달립니다. 그래서 ESP32가 300 ms 동안 명령을 받지 못하면 스스로 멈추게 하고, 가속도 제한했습니다. 하드웨어 비상정지는 젯슨을 거치지 않는 경로로 따로 두었습니다. 워치독이 실제로 차를 세우는지는 전용 시험 명령으로 확인했습니다.</p></div>
+      <div class="tile"><h3>차 없이 시험하기</h3><p>실차를 만질 수 있는 시간이 짧아서, 가짜 ESP32와 서보, 라이다를 만들어 프로그램 전체와 점검 화면을 노트북에서 돌렸습니다. 시험 스크립트 15개를 명령 한 번으로 돌린 뒤에 실차에 올립니다. 실차 첫 시험은 라이다와 카메라, ESP32, 모터, 서보, 바닥 주행 순서로 되는 것부터 확인했습니다.</p></div>
+      <div class="tile"><h3>대회 당일</h3><p>현장에서는 손댈 수 있는 게 거의 없고, 실수 하나가 벌점이나 실격으로 이어집니다. 시간표와 세 사람의 역할(조작, 비상정지, 기록), 켜면 안 되는 프로그램까지 순서표에 적었습니다. 느린 차들 사이에서 쓸 속도 단계는 시뮬레이션을 단계마다 4판씩 돌려 비교했고, 4판 중 3판을 완주한 2단계를 기본으로 정해 두고 나갔습니다.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="race" data-nav="대회">
+    <h2>대회.</h2>
+    <p class="todo">대회 결과와 현장에서 일어난 일, 다시 한다면 바꿀 점을 적어 주세요.</p>
+    <p class="small">대회 이야기는 <a href="https://blog.naver.com/koreatonystark">블로그</a>에도 적고 있습니다.</p>
+  </section>
+
+  <section class="more-works" aria-label="다른 작업"></section>
+</main>
+
+<footer class="foot"></footer>
+<script type="module">
+  // draw the lap once the map is on screen, then keep a small dot going round
+  import { LINE } from '../assets/js/track.js';
+  const lap = document.getElementById('lap'), car = document.getElementById('car');
+  document.getElementById('ghost').setAttribute('d', LINE); lap.setAttribute('d', LINE);
+  const L = lap.getTotalLength(), still = matchMedia('(prefers-reduced-motion: reduce)').matches, DRAW = 2600, ROUND = 14000;
+  lap.style.strokeDasharray = L; lap.style.strokeDashoffset = still ? 0 : L;
+  let t0 = null;
+  if (!still) new IntersectionObserver(([e], o) => { if (e.isIntersecting) { t0 = performance.now() + 500; o.disconnect(); } }, { threshold: 0.4 }).observe(document.getElementById('map'));
+  (function tick(now) {
+    if (t0 !== null && now > t0) {
+      const t = now - t0, k = Math.min(1, t / DRAW), e = 1 - Math.pow(1 - k, 3);
+      lap.style.strokeDashoffset = L * (1 - e);
+      const p = lap.getPointAtLength((t < DRAW ? e : ((t - DRAW) / ROUND) % 1) * L);
+      car.setAttribute('cx', p.x); car.setAttribute('cy', p.y);
+    }
+    if (!still) requestAnimationFrame(tick);
+  })(performance.now());
+</script>
+<script type="module" src="../assets/js/chrome.js"></script>
+<script type="module" src="../assets/js/work.js"></script>
+</body></html>

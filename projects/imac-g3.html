@@ -1,0 +1,95 @@
+<!doctype html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>iMac G3 · MODE Lab</title>
+<meta name="description" content="책상 위의 작은 iMac G3 화면과, 그 화면에서 할 게임을 위한 무선 컨트롤러.">
+<meta property="og:title" content="iMac G3 · MODE Lab"><meta property="og:image" content="https://kkwoogy.github.io/assets/img/og.jpg">
+<meta name="theme-color" content="#000000">
+<link rel="icon" href="../favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css">
+<link rel="stylesheet" href="../assets/css/site.css">
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+</head>
+<body data-work="imac-g3">
+<header class="gnav"></header>
+<nav class="lnav" aria-label="iMac G3"></nav>
+
+<section class="scrolly" id="controller" data-nav="컨트롤러">
+  <div class="stage-col">
+    <div class="stage" id="stage" data-model="controller">
+      <canvas aria-label="게임 컨트롤러 3D 모델. 끌어서 돌려 볼 수 있습니다."></canvas>
+      <img class="still" src="../assets/img/ctrl-clay.png" alt="게임 컨트롤러 렌더">
+      <div class="tags"></div><div class="load"></div>
+      <p class="hint">끌어서 돌려 보기</p>
+    </div>
+  </div>
+  <div class="steps">
+    <div class="step intro">
+      <p class="crumb"><a href="../product/">제품</a></p>
+      <h1>iMac G3</h1>
+      <p class="lead">책상 위에 두는 작은 iMac G3 화면과, 그 화면에서 할 게임을 위한 무선 컨트롤러입니다. 컨트롤러는 파이썬 스크립트 하나(manifold3d, trimesh)로 설계했습니다.</p>
+      <p class="about-line"><span data-meta></span></p>
+    </div>
+    <div class="step" id="body" data-x="0.6" data-f="shell" data-pitch="-0.5">
+      <p><b>윗판과 아랫판.</b> 두 판을 바닥에서 M3 나사 여섯 개로 닫습니다. 아랫판 가장자리의 턱이 윗판 안쪽으로 들어가 맞물립니다.</p>
+      <p>빨간 미니 iMac G3에 맞춰 아랫판은 빨간색, 윗판은 투명하게 뽑을 생각입니다.</p>
+    </div>
+    <div class="step" id="print" data-x="0" data-f="shell" data-pitch="-0.72" data-yaw="0.3">
+      <p><b>옆에서 보면.</b> 모서리 라운드가 바닥 면에서 45° 경사로 시작합니다. 그래서 윗판이든 아랫판이든 어느 면을 바닥에 놓아도 서포트 없이 출력됩니다. 출력 부품은 일곱 개입니다.</p>
+    </div>
+    <div class="step" id="buttons" data-x="1" data-f="btn" data-pitch="-0.25">
+      <p><b>버튼.</b> 버튼마다 둘레에 0.4 mm 틈을 남겼습니다. 겉면에 칠할 도장 두께까지 넣은 값입니다. 버튼 아래 플랜지가 빠지지 않게 잡아 주고, 6 × 6 mm 택트 스위치 위에 얹힙니다.</p>
+    </div>
+    <div class="step" id="inside" data-x="1" data-f="elec" data-pitch="-0.1">
+      <p><b>안에 들어가는 것.</b> XIAO ESP32-S3, 503450 리튬 배터리, 뒷면 USB-C 충전 모듈, 28 mm 스피커와 앰프(MAX98357A)입니다. 뒷면의 슬라이드 스위치 두 개로 전원과 스피커를 따로 켜고 끕니다.</p>
+      <p>화면과는 ESP-NOW로 연결하고, 리듬 게임의 박자는 컨트롤러가 직접 판정하게 할 계획입니다.</p>
+    </div>
+    <div class="step" id="fit" data-x="0">
+      <p><b>닫기 전에.</b> 스크립트 마지막에 모든 부품과 전자부품 자리가 서로 겹치지 않는지, 버튼을 0.3 mm 눌렀을 때 윗판에 닿지 않는지 검사합니다. 실제 부품을 재서 값이 다르면 목록만 고치고 다시 돌립니다.</p>
+    </div>
+  </div>
+</section>
+
+<main class="work">
+  <section class="sec" id="specs" data-nav="제원">
+    <h2>컨트롤러 제원.</h2>
+    <dl class="specs">
+      <div><dt>크기</dt><dd>128 × 56 × 22 mm</dd></div>
+      <div><dt>보드</dt><dd>XIAO ESP32-S3</dd></div>
+      <div><dt>배터리</dt><dd>503450 리튬 배터리, 뒷면 USB-C 충전</dd></div>
+      <div><dt>소리</dt><dd>28 mm 스피커, 앰프 MAX98357A</dd></div>
+      <div><dt>버튼</dt><dd>6 × 6 mm 택트 스위치, 버튼 둘레 틈 0.4 mm</dd></div>
+      <div><dt>스위치</dt><dd>뒷면 슬라이드 스위치 두 개(전원, 스피커)</dd></div>
+      <div><dt>연결</dt><dd>ESP-NOW</dd></div>
+      <div><dt>조립</dt><dd>M3 나사 여섯 개</dd></div>
+      <div><dt>출력</dt><dd>부품 일곱 개, 서포트 없이</dd></div>
+      <div><dt>설계</dt><dd>파이썬(manifold3d, trimesh)</dd></div>
+    </dl>
+  </section>
+
+  <section class="sec" id="screen" data-nav="데스크 스크린">
+    <h2>데스크 스크린.</h2>
+    <p>컨트롤러를 만들게 된 화면입니다. 처음 해 본 개인 프로젝트이기도 합니다. <b>ESP32-S3 4인치 터치 화면(480 × 480)을 iMac G3 모양 케이스에 넣어서</b>, 노트북과 연결해 AI 작업의 승인 요청과 진행 상황, Somewhere 음악, 시계와 날씨를 띄웁니다. 기본 LVGL 모양이 마음에 들지 않아 UI는 직접 그렸습니다.</p>
+    <p>케이스는 구매한 iMac G3 모델을 화면과 보드에 맞게 고쳐서 출력했습니다.</p>
+    <div class="slot">책상 위에 둔 데스크 스크린 사진<small>assets/img/ds-photo.jpg</small></div>
+    <div class="tiles">
+      <div class="tile"><h3>화면 그리기</h3><p>처음엔 터치가 눈에 띄게 느렸습니다. 화면 회전을 LCD 컨트롤러에 넘기고 그리기 버퍼를 내부 SRAM으로 옮겨서, 화면 전체를 다시 그리는 시간이 63 ms에서 51 ms로 줄었습니다. 터치는 다른 코어에서 5 ms마다 읽습니다.</p></div>
+      <div class="tile"><h3>무선 업데이트</h3><p>기숙사 Wi-Fi를 다른 사람과 같이 쓰다 보니, 무선 업데이트에 Ed25519 서명을 넣고 붙는 기기는 연결 키를 증명하게 했습니다. 맥 화면이 잠겨 있으면 보드에서 누른 '허용'은 무시됩니다.</p></div>
+      <div class="tile"><h3>학교 Wi-Fi</h3><p>학교 Wi-Fi에서는 노트북과 보드가 서로를 못 찾았습니다. 이제는 보드가 서명한 신호로 자기 주소를 알리고, 켠 지 20초쯤이면 붙습니다.</p></div>
+    </div>
+  </section>
+
+  <section class="sec" id="next">
+    <h2>다음.</h2>
+    <p>컨트롤러를 시험 출력해서 버튼 감촉과 틈을 맞추고, 화면에서 돌아갈 리듬 게임을 만듭니다.</p>
+    <p class="small">만드는 과정은 <a href="https://blog.naver.com/koreatonystark">블로그</a>에 적고 있습니다.</p>
+  </section>
+
+  <section class="more-works" aria-label="다른 작업"></section>
+</main>
+
+<footer class="foot"></footer>
+<script type="module" src="../assets/js/chrome.js"></script>
+<script type="module" src="../assets/js/case.js"></script>
+<script type="module" src="../assets/js/work.js"></script>
+</body></html>
